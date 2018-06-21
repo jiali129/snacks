@@ -12,12 +12,15 @@ Vue.use(http)
 import lazyload from 'vue-lazyload'
 //引入VueX
 import Store from '@/store/store.js'
-Vue.use(lazyload,{
-  loading:'/src/assets/loading1.gif'
+Vue.use(lazyload, {
+  loading: '/src/assets/loading1.gif'
 })
+//引入验证组件
+import VueLidate from 'vuelidate'
+Vue.use(VueLidate)
 new Vue({
   el: '#app',
   router,
-  store:Store,
+  store: Store,
   render: h => h(App)
 })

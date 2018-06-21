@@ -7,9 +7,11 @@ Vue.use(Router)
  import Search from '../views/classify/search'
  import Shopping from '../views/home/shopping'
  import Mine from '../views/home/mine'
+ import Login from '../views/login/login'
  import Detail from '../views/home/detail'
  import Register from '../views/register/register'
  
+ import {getCookie} from '@/utils/utils'
 
  let router=new Router({
      mode:'history',
@@ -59,8 +61,26 @@ Vue.use(Router)
             path:'/search',
             name:'search',
             component:Search
+        },
+        {
+            path:'/login',
+            name:'login',
+            component:Login
         }
-         
      ]
+ })
+ //导航守卫
+ router.beforeEach((to,from,next)=>{
+        if(to.name=='mine' || to.name=='shopping'){
+            let token= getCookie('token')
+            //console.log(token)
+            if(!token){
+                next({name:'login',query:{from:to.name}})
+            }else{
+                next()
+            }
+        }else{
+            next()
+        }
  })
  export default router

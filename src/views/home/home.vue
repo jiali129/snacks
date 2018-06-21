@@ -105,7 +105,6 @@ export default {
             let scrollH = this.$refs.wrap.scrollTop;
             //console.log(winH,docH,scrollH)
             if (docH - winH - scrollH < 30 && this.canIQuery) {
-                //console.log('jiejin')
                 this.page++;
                 this.canIQuery = false;
                 this.$http.get(`/index/recommend.action?page=${this.page}`).then(
@@ -146,12 +145,7 @@ export default {
         //列表商品初始请求
         this.$http.get(`/index/recommend.action?page=${this.page}`).then(res => {
             this.list = JSON.parse(JSON.parse(res).recommend).wareInfoList;
-            //console.log(this.list)
-        });
-        this.$http.post('/user/login?name=123').then(res=>{
-            console.log(res)
-        })
-          
+        })      
     },
     components: {
         Goodsliem,

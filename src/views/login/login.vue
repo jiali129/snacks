@@ -1,33 +1,32 @@
 <template>
-    <div class="register">
-        <!-- 这是注册页面 -->
+    <div class="login">
         <div class="header">
             <span>＜</span>
             <span>717商城</span>
-            <span @click="gotologin">登录</span>
-        </div><hr/>
+            <span @click="register">注册</span>
+        </div>
         <div class="content">
             <p>
-                <label for="username">用户名:</label><input id="username" type="text" v-model="username" placeholder="请输入用户名"></p>
+                <label for="username">用户名:</label><input id="username" v-model="username" type="text" placeholder="请输入用户名">
+            </p>
             <p>
-                <label for="password">密码:</label><input id="password" v-model="password" type="password" placeholder="请输入密码"></p>
-            <p>
-                <label for="password">再次输密码:</label><input id="passwordr" v-model="passwordr" type="password" placeholder="请再次输入密码"></p>
-            <button @click='gontoRegister' class="btn">立即注册</button>
+                <label for="password">密码:</label><input id="password" v-model="password" type="password" placeholder="请输入密码">
+            </p>
+            <button @click='gontoLogin' class="btn">登录</button>
         </div>
     </div>
 </template>
 <script>
+import {setCookie} from '../../utils/utils.js'
 export default {
     data() {
         return {
             username: "",
-            password: "",
-            passwordr: ""
+            password: ""
         };
     },
     methods: {
-        gontoRegister() {
+        gontoLogin() {
             let Phones = /^1[3578]\d{9}$/;
             if (!Phones.test(this.username)) {
                 alert("请输入正确的手机号");
@@ -38,38 +37,43 @@ export default {
                 alert("请输入正确的密码");
                 return;
             }
-            if (this.password !== this.passwordr) {
-                alert("请输入的密码一致");
-                return;
-            }
-            if (!this.username || !this.password || !this.passwordr) {
+
+            if (!this.username || !this.password) {
                 alert("请填写所有信息");
                 return;
             }
             this.$http
-                .post("/api/user/register", {
+                .post("/user/login", {
                     username: this.username,
                     password: this.password
                 })
                 .then(res => {
-                    console.log(res);
+                    //console.log(res)
                     if (res.code == 1) {
+                        setCookie('token',res.token)
+                        //document.cookie = `token=${res.token}`;
                         this.$router.push({
-                            name: "login"
-                        });
+                            //重定向
+                            name:this.$route.query.from || 'home'
+                        })
+                    }else{
+                        console.log(res.msg)
                     }
                 });
         },
-        gotologin(){
+        register(){
             this.$router.push({
-                name:'login'
+                name:'register'
             })
         }
+    },
+    mounted() {
+        console.log(this.$route);
     }
 };
 </script>
 <style scoped>
-.register {
+.login{
     width: 100%;
     height: 100%;
     background: #eee;
@@ -80,14 +84,14 @@ export default {
     line-height: 1rem;
     background: #fff;
 }
-.header > span:nth-child(2) {
+ .header>span:nth-child(2) {
     font-size: 22px;
     text-align: center;
-}
-.header > span:nth-child(3) {
-    color: red;
-    text-align: right;
-}
+} 
+.header>span:nth-child(3) {
+   color: red;
+    text-align:right;
+} 
 .header span {
     width: 32%;
     display: inline-block;
@@ -97,14 +101,15 @@ export default {
 }
 .content p {
     width: 100%;
-    height: 50px;
+    height: 40px;
      background: #fff;
     border-bottom: 1px solid #ccc;
 }
 .content p input {
     border: none;
-    height: 49px;
-     outline:none; /*去除获取焦点时的边框 */
+    width: 70%;
+    height: 39px;
+    outline:none;/*去除获取焦点时的边框 */
 }
 .content p label{
     font-size: 16px;
@@ -120,6 +125,8 @@ export default {
     font-size: 18px;
     border-radius: 15px;
     margin-left: 15%;
-    height: 45px;
+    height: 40px;
 }
 </style>
+
+

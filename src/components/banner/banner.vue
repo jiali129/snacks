@@ -14,17 +14,17 @@ export default {
         return {
             banner: [
                 {
-                    class: "iconfont icon-icon-test",
+                    class: "iconfont icon-icon-test1",
                     title: "家乡味道",
                     style:'yellow'
                 },
                 {
-                    class: "iconfont icon-jiubei",
+                    class: "iconfont icon-shutiao",
                     title: "进口食品",
                     style:'purple'
                 },
                 {
-                    class: "iconfont icon-xiaomai",
+                    class: "iconfont icon-niunai",
                     title: "牛乳制品",
                     style:'orange'
                 },
@@ -34,22 +34,22 @@ export default {
                     style:'cyan'
                 },
                 {
-                    class: "iconfont icon-lingshi",
+                    class: "iconfont icon-icon--",
                     title: "休闲食品",
                     style:'pink'
                 },
                 {
-                    class: "iconfont icon-icon-test",
+                    class: "iconfont icon-icon-test1",
                     title: "米面粮油",
                     style:'skyblue'
                 },
                 {
-                    class: "iconfont icon-xiaomai",
+                    class: "iconfont icon-lunchuan",
                     title: "调味调料",
                     style:'yellow'
                 },
                 {
-                    class: "iconfont icon-chabei",
+                    class: "iconfont icon-shutiao",
                     title: "酒水饮料",
                     style:'green'
                 }
