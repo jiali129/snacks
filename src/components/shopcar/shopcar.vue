@@ -1,7 +1,6 @@
 <template>
     <div class="list" >
         <i :class="checkedClass" @click="flag=!flag"></i>
-
         <img :src="data.imageurl" alt="" />
         <div class="dataCar">
             <p class="text">{{data.wname}}</p>
@@ -35,7 +34,7 @@ export default {
         })
     },
     computed:{
-        checkedClass(){
+        checkedClass(){ //前面的选中非选中
             let str='iconfont '
             return this.flag? str +'icon-webicon19':str +"icon-webicon206"
         }
@@ -53,7 +52,7 @@ export default {
        }
     },
     methods:{
-        decrement(){
+        decrement(){  // 点击减减
             //子组件不能直接修改父组件的值
             let count=this.data.count;
             if(count-1<=0){count=1}
@@ -69,7 +68,7 @@ export default {
                 }
             })
         },
-        increment(){
+        increment(){ //点击加加
             let count=this.data.count;
             (count+1 >10) && (count=9)
             this.$http.post('/api/cart/count',{

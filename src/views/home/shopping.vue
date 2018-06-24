@@ -4,7 +4,7 @@
             <span style="font-size:22px" @click="gohome">＜</span>
             <span>购物车</span>
             <span @click="eidtr">{{eidt}}</span>
-            <i class="iconfont icon-xiaoxi"></i>
+            <i class="iconfont icon-xiaoxi" @click="goinformation"></i>
         </div>
         <div class="content">
             <div class="list" v-show="$store.state.cartList.length==0">空空如也~</div>
@@ -116,6 +116,11 @@ export default {
         gohome() {
             this.$router.push({
                 name: "home"
+            });
+        },
+        goinformation(){
+            this.$router.push({
+                name: "information"
             });
         }
     },

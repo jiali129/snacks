@@ -7,8 +7,8 @@
                 <dd><img src="../../assets/images/a2.png" alt=""></dd>
                 <dt>我的店铺</dt>
             </dl>
-            <dl class="dls">
-                <dd><img src="../../assets/images/a2.png" alt=""></dd>
+            <dl class="dls" @click="goInformation">
+                <dd ><i class="iconfont icon-xiaoxi"></i></dd>
                 <dt>消息</dt>
             </dl>
         </div>
@@ -89,6 +89,11 @@ export default {
         };
     },
     methods: {
+        goInformation(){
+           this.$router.push({
+                name: "information"
+            });
+        },
         gotoSearch() {
             this.$router.push({
                 name: "register"
@@ -204,6 +209,9 @@ export default {
 .dls > dd > img {
     width: 60%;
     margin-left: 20%;
+}
+.dls > dd i{
+  font-size:.45rem;
 }
 .dls > dt {
     font-size: 12px;

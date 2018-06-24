@@ -9,7 +9,7 @@ app.all('*',function(req,res,next){
         'Access-Control-Allow-Headers': 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild'
     })
 
-   next()
+   next() 
 })
 apilist(app)
 
