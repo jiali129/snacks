@@ -15,6 +15,13 @@ import Store from '@/store/store.js'
 Vue.use(lazyload, {
   loading: '/src/assets/loading1.gif'
 })
+//引入弹框
+//import Toast from 'j-toast'
+import Toast from '@/plugins/toast/toast'
+Vue.use(Toast,{
+  timeout:1000,
+  autoclose:false  //避免多次点击
+})
 //引入验证组件
 import VueLidate from 'vuelidate'
 Vue.use(VueLidate)

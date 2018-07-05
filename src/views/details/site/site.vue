@@ -5,25 +5,40 @@
                 <span>收货地址</span>
                 <span></span>
         </header>
-        <div class="coutr">
-            <editAddress></editAddress>
+        <div class="coutr" v-show='data.length==0'>
+            <h3>您当前还没有地址可用哦！</h3>
         </div>
+       <editAddress v-for="(x,idx) in data" :key="idx" v-bind="{datas:x,id:idx}"></editAddress>
         <div class='footer'>
-            <button>+新增地址</button>
+            <button @click="newSite">+新增地址</button>
         </div>  
     </div>
 </template>
 <script>
 import editAddress from '@/components/editAddress/editAddress'
+import { getCookie } from "@/utils/utils";
 export default {
     data(){
         return{
+            
+             data:[]
         }
     },
-    methods:{
+    created() {
+        this.$http.post("/api/addrlist", { token: getCookie("token") }).then(res => {
+            // console.log(res);
+            this.data = res.data;
+        });
+    },
+     methods:{
         gotomine(){
             this.$router.push({
                 name:'mine'
+            })
+        },
+        newSite(){ //点击添加
+             this.$router.push({
+                name:'addsite'
             })
         }    
     },
@@ -67,6 +82,7 @@ header>span:nth-child(2){
 .footer{
     width: 100%;
     height: 0.9rem;
+    margin-top: .5rem;
 }
 .footer button{
     width: 70%;

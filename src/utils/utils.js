@@ -1,6 +1,7 @@
 import Vue from 'vue'
 /**
  * 获取对应名称的cookie
+ * @import <
  * @param name cookie的名称
  * @returns {null} 不存在时，返回null
  */

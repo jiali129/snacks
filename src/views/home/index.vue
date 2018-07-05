@@ -2,10 +2,30 @@
     <div class="roots">
         <router-view class="view"></router-view>
         <div class="footer">
-            <router-link :to="{name:'home'}">首页</router-link>
-            <router-link :to="{name:'classify'}">分类</router-link>
-            <router-link :to="{name:'shopping'}">购物车</router-link>
-            <router-link :to="{name:'mine'}">我的</router-link>
+            <router-link :to="{name:'home'}">
+                <dl>
+                    <dt><i class="iconfont icon-tubiaozhizuomoban"></i></dt>
+                    <dd>首页</dd>
+                </dl>
+            </router-link>
+            <router-link :to="{name:'classify'}">
+                <dl>
+                    <dt><i class="iconfont icon-fenlei"></i></dt>
+                    <dd>分类</dd>
+                </dl>
+            </router-link>
+            <router-link :to="{name:'shopping'}">
+                <dl>
+                    <dt><i class="iconfont icon-gouwuchekong"></i></dt>
+                    <dd>购物车</dd>
+                </dl>
+            </router-link>
+            <router-link :to="{name:'mine'}">
+                <dl>
+                    <dt><i class="iconfont icon-wode"></i></dt>
+                    <dd>我的</dd>
+                </dl>
+            </router-link>
         </div>
 
     </div>
@@ -33,6 +53,10 @@ export default {};
     text-align: center;
     text-decoration: none;
     color: #000;
+     -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+-webkit-user-select: none;
+-moz-user-focus: none;
+-moz-user-select: none; 
 }
 </style>
 

@@ -96,9 +96,8 @@ module.exports = function (app) {
                     code: 0
                 })
             } else {
-                console.log(decoded)
+                //console.log(decoded)
                 let goods = JSON.parse(fs.readFileSync(__dirname + '/cartlist/cartlist.json', 'utf-8'))
-
                 res.json({
                     msg: 'success',
                     code: 1,
@@ -129,7 +128,7 @@ module.exports = function (app) {
                 let cartlist = JSON.parse(fs.readFileSync(cartpath, 'utf-8'))
                 if (cartlist[decoded.username]) {
                     let flag = false; //判断商品是否已经存在
-                    cartlist[decoded.username].forEach((item, index)=>{
+                    cartlist[decoded.username].forEach((item, index) => {
                         if (item.wname == req.body.data.wname) {
                             ++item.count;
                             flag = true
@@ -143,9 +142,8 @@ module.exports = function (app) {
                         cartlist[decoded.username].push(o)
                     }
                 } else {
-                    cartlist[decoded.username] = [{count:1, ...req.body.data}];
+                    cartlist[decoded.username] = [{ count: 1, ...req.body.data }];
                 }
-
                 fs.writeFile(cartpath, JSON.stringify(cartlist), (err) => {
                     if (err) {
                         res.json({
@@ -165,7 +163,7 @@ module.exports = function (app) {
         })
     })
     //修改购物车数量
-    app.post('/api/cart/count',(req,res)=>{
+    app.post('/api/cart/count', (req, res) => {
         if (!req.body.token) {
             res.status(304) //只要下面node不报错，就是页面上的问题
             res.json({
@@ -186,11 +184,11 @@ module.exports = function (app) {
                 let goodslist = cartlist[decoded.username]
 
                 //操作数据库（实际json文件）
-                goodslist = goodslist.map((item,index)=>{
-                   if(item.wname=req.body.goodsname){
-                       item.count = req.body.count
-                   }
-                   return item    
+                goodslist = goodslist.map((item, index) => {
+                    if (item.wname == req.body.goodsname) {
+                        item.count = req.body.count
+                    }
+                    return item
                 })
                 cartlist[decoded.username] = goodslist
 
@@ -213,7 +211,7 @@ module.exports = function (app) {
         })
     })
     //删除购物车
-    app.post('/api/cart/del',(req,res)=>{
+    app.post('/api/cart/del', (req, res) => {
         if (!req.body.token) {
             res.status(304)
             res.json({
@@ -223,6 +221,7 @@ module.exports = function (app) {
             return;
         }
         jwt.verify(req.body.token, 'JL', (err, decoded) => {
+            console.log(decoded)
             if (err) {
                 res.json({
                     msg: '登陆超时,请重新登陆',
@@ -231,27 +230,27 @@ module.exports = function (app) {
             } else {
                 const cartpath = __dirname + '/cartlist/cartlist.json';
                 let cartlist = JSON.parse(fs.readFileSync(cartpath, 'utf-8'))
+                //console.log(cartlist) 从一个字符串中解析出json对象
                 let goodslist = cartlist[decoded.username]
-                //   console.log(req.body)
+                //console.log(goodslist)
                 //操作数据库（实际json文件）
-                let delindex=[];
+                let delindex = [];
                 let arr = [];
-                goodslist = goodslist.map((item,index)=>{
+                goodslist = goodslist.map((item, index) => {
                     //console.log(item.wname);
-                    //let i = 
-                    req.body.goodsname.map(val=>{
-                                val.map((i,ind)=>{
-                                    if(item.wname == i.wname){
-                                        // console.log(index)
-                                         delindex.push(ind)
-                                     }
-                                })       
-                       
+                    req.body.goodsname.map(val => {
+                        val.map((i, ind) => {
+                            if (item.wname == i.wname) {
+                                // console.log(index)
+                                delindex.push(ind)
+                            }
+                        })
+
                     })
-                    delindex.map((val,ind)=>{
+                    delindex.map((val, ind) => {
                         //console.log(val)
-                        if(index!=val){
-                           // console.log(item)
+                        if (index != val) {
+                            // console.log(item)
                             arr.push(item)
                         }
                     })
@@ -274,5 +273,107 @@ module.exports = function (app) {
 
             }
         })
+    })
+    //添加账号
+    app.post('/api/addaddr', (req, res) => {
+        //console.log(req.body) //获取到要添加的信息
+        let addrlist = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'addr/addr.json'), 'utf-8'))  //写入到json里面
+        jwt.verify(req.body.token, 'JL', (err, decoded) => {
+            if (err) {
+                res.json({
+                    code: 0,
+                    msg: '登录超时,请重新登录'
+                })
+            } else {
+                if (addrlist[decoded.username]) {
+                    addrlist[decoded.username].push(req.body.data)
+                } else {
+                    addrlist[decoded.username] = [req.body.data]
+                }
+                fs.writeFile(path.resolve(__dirname, 'addr/addr.json'), JSON.stringify(addrlist), function (error) {
+                    if (error) {
+                        res.json({
+                            code: 0,
+                            msg: '服务器报错',
+                            data: error
+                        })
+                    } else {
+                        res.json({
+                            code: 1,
+                            msg: '添加成功',
+                            // data:addrlist[decoded.username]
+                        })
+                    }
+                })
+            }
+        })
+
+        // res.json({
+        //     code:1
+        // })
+    })
+    //获取邮寄地址列表
+    app.post('/api/addrlist', (req, res) => {
+        let addrlist = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'addr/addr.json'), 'utf-8'))
+        jwt.verify(req.body.token, 'JL', (err, decoded) => {
+            if (err) {
+                res.json({
+                    code: 0,
+                    msg: '登录超时,请重新登录'
+                })
+            } else {
+                res.json({
+                    code: 1,
+                    msg: '请求成功',
+                    data: addrlist[decoded.username]
+                })
+            }
+        })
+    })
+    //删除地址列表
+    app.post('/api/cancellist', (req, res) => {
+        // console.log(req.body.id) 获取到传过来的id
+        let cancel = JSON.parse(fs.readFileSync(path.join(__dirname, 'addr', 'addr.json'))) //读取到json文件中的地址信息
+        let arr = [];
+        arr.push(cancel);  //数组中包含数组
+        jwt.verify(req.body.token, 'JL', (err, decoded) => {
+            // console.log(decoded) 本身的信息
+            if (err) {
+                res.json({
+                    code: 0,
+                    msg: "登录失败，请重新登录"
+                })
+            } else {
+                let newlist = [];
+                arr.forEach((val, index) => {
+                    //console.log(val) 所有的地址信息
+                    console.log(val[decoded.username]) //不包含本身的，只有添加的地址信息
+                    if (val[decoded.username]) {
+                        val[decoded.username].forEach((vals, ind) => {
+                            if (req.body.id != ind) {
+                                newlist.push(vals)
+                            }
+                        })
+                        val[decoded.username] = newlist
+                    }
+                })
+                //异步要加回调函数
+                fs.writeFile(path.join(__dirname, 'addr', 'addr.json'), JSON.stringify(cancel), (err) => {
+                    if (err) {
+                        res.json({
+                            code: 0,
+                            msg: err
+                        })
+                    } else {
+                        res.json({
+                            code: 0,
+                            msg: '删除成功'
+                        })
+                    }
+                })
+
+            }
+        })
+
     })
 }

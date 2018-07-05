@@ -4,7 +4,7 @@
             <span class="headS"><img src="../../assets/images/a1_03.png" alt=""></span>
             <input type="text" placeholder="请输入您想要的商品" @click='gotoSearch'>
             <dl class="dls">
-                <dd><img src="../../assets/images/a2.png" alt=""></dd>
+                <dd><i class="iconfont icon-tubiaozhizuomoban"></i></dd>
                 <dt>我的店铺</dt>
             </dl>
             <dl class="dls" @click="goInformation">
@@ -65,17 +65,22 @@
             </div>
             <ul ref="list" class="uls">
                 <li v-for='(item,idx) in list' :key='idx'>
-                    <Goodsliem :data='item'></Goodsliem>
+                    <Goodsliem :data='item' :instance="$refs.alert"></Goodsliem>
                 </li>
             </ul>
+            <Toast ref="alert"></Toast>
+            
             <p class="tips">{{tips}}</p>
         </div>
     </div>
 </template>
 <script>
+
 //direction: 'vertical'
-import Swiper from "swiper";
-import "swiper/dist/css/swiper.css";
+// import Swiper from "swiper";
+//import "swiper/dist/css/swiper.css";
+import Swiper from '@/assets/swiper/swiper-3.4.2.min.js';
+import "@/assets/swiper/swiper-3.4.2.min.css";
 import Goodsliem from "@/components/goodsliem/goodltem";
 import Banner from "@/components/banner/banner";
 import jsonp from "@/utils/jsonp";
@@ -135,7 +140,7 @@ export default {
         let swi = new Swiper(this.$refs.swiper, {
             autoplay: true, //可选选项，自动滑动
             loop: true,
-            speed: 100,
+            speed: 2000,
             pagination: {
                 //出现小圆点
                 el: ".swiper-pagination"
@@ -144,7 +149,7 @@ export default {
         let swipers = new Swiper(this.$refs.swiper2, {
             autoplay: true, //可选选项，自动滑动
             loop: true,
-            speed: 100, //不加这个不会自动轮播
+            speed: 1000, //不加这个不会自动轮播
             direction: "vertical"
         });
         //列表商品初始请求
@@ -203,18 +208,11 @@ export default {
     width: 17%;
 }
 .dls > dd {
-    width: 60%;
-    margin-left: 20%;
-}
-.dls > dd > img {
-    width: 60%;
-    margin-left: 20%;
-}
-.dls > dd i{
-  font-size:.45rem;
+    width: 100%;
+    text-align: center;
+    
 }
 .dls > dt {
-    font-size: 12px;
     text-align: center;
 }
 .content {
@@ -279,6 +277,10 @@ export default {
     text-decoration: none;
     color: 999;
     float: right;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+-webkit-user-select: none;
+-moz-user-focus: none;
+-moz-user-select: none;
 }
 </style>
 

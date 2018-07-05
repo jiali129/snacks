@@ -7,13 +7,13 @@
             <i class="iconfont icon-xiaoxi" @click="goinformation"></i>
         </div>
         <div class="content">
-            <div class="list" v-show="$store.state.cartList.length==0">空空如也~</div>
-            <shopcar v-on:updatas='fetchList' v-for="(val,idx) in $store.state.cartList" :key='idx' v-bind:data='val'></shopcar>
+            <div class="list" v-show="$store.state.cartList.length==0">呀~，你里面没有宝贝，快去添加</div>
+            <shopcar  v-for="(val,idx) in $store.state.cartList" :key='idx' v-bind:data='val'></shopcar>
         </div>
         <div class="close">
             <span>
                 <i :class="checkedClass" @click='selectedAll'></i>全选
-            </span>
+            </span>  
             <span>合计： $
                 <b style="color:red">{{total}}</b>
             </span>
@@ -35,7 +35,6 @@ export default {
             eidt: "编辑"
         };
     },
-
     created() {
         this.$store.dispatch("fetchCartList");
     },
@@ -74,7 +73,7 @@ export default {
                     this.$http.post("/api/cart/del", {
                             token: getCookie("token"),
                             goodsname: arr
-                        }).then(res => {
+                        }).then(res => {  
                             console.log(res);
                     });
                         
@@ -111,7 +110,7 @@ export default {
         },
         selectedAll() {
             this.flag = !this.flag;
-            bus.$emit("selected-all", this.flag);
+            bus.$emit("selected-all", this.flag); //子组件给父组件传值
         },
         gohome() {
             this.$router.push({
@@ -164,20 +163,19 @@ export default {
 }
 .close {
     width: 100%;
-    height: 1.1rem;
-    line-height: 1rem;
+    height: 1rem;
     background: #fff;
 }
-.close span {
+.close>span {
     display: inline-block;
-    width: 32%;
+    width: 32.5%;
 }
 .close span i {
     font-size: 0.6rem;
 }
 .closeK {
-    display: inline-block;
-    width: 2rem;
+    height: 0.9rem;
+    line-height: .9rem;
     background: salmon;
     text-align: center;
     color: #fff;

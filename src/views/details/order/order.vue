@@ -2,7 +2,7 @@
     <div class="order">
        <header>
                <span @click="gotomine">＜</span>
-                <span>收货地址</span>
+                <span>我的订单</span>
                  <span class="iconfont icon-xiaoxi" @click="goinformation"></span>
         </header> 
         <div class="nav">
@@ -39,7 +39,9 @@ export default {
     width: 100%;
     height: 100%;
     background: #eee;
+    margin:0;padding:0;
     display: flex;
+    flex-direction: column;
     
 }
 header{
@@ -53,6 +55,22 @@ header{
 }
 header>span{
     font-size: .4rem;  
+}
+.navs{
+    width: 100%;
+    height: 0.9rem;
+    line-height: .9rem;
+    border-bottom:.01rem solid firebrick;
+}
+.navs a{
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    width: 19%;
+}
+.router-link-active{
+   color: deeppink;
+    border-bottom: .01rem solid deeppink;
 }
 
 </style>

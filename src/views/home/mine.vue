@@ -2,7 +2,7 @@
     <div class="mine">
         <div class='header'>
             <p>
-                <span class="iconfont icon-shezhi"></span>
+                <span class="iconfont icon-shezhi" @click="setting"></span>
                 <span>我的717商城</span>
                 <span class="iconfont icon-xiaoxi" @click="goinformation"></span>
             </p>
@@ -24,25 +24,25 @@
                     </dd>
                     <dt>代付款</dt>
                 </dl>
-                <dl>
+                <dl @click="payme">
                     <dd>
                         <i class="iconfont icon-ziyuan"></i>
                     </dd>
                     <dt>代发货</dt>
                 </dl>
-                <dl>
+                <dl @click="payme">
                     <dd>
                         <i class="iconfont icon-che"></i>
                     </dd>
                     <dt>代收货</dt>
                 </dl>
-                <dl>
+                <dl @click="payme">
                     <dd>
                         <i class="iconfont icon-shouhou"></i>
                     </dd>
                     <dt>售后</dt>
                 </dl>
-                <dl>
+                <dl @click="payme">
                     <dd>
                         <i class="iconfont icon-dingdan"></i>
                     </dd>
@@ -73,7 +73,7 @@ export default {
                     right: "＞"
                 },
                 {
-                    name: "site",
+                    name: "addsite",
                     icon: "icon-map",
                     Mname: "地址管理",
                     right: "＞"
@@ -88,6 +88,11 @@ export default {
         };
     },
     methods: {
+        setting(){
+            this.$router.push({
+                name: "sets"
+            });
+        },
         payme(){
             this.$router.push({
                 name: "order"

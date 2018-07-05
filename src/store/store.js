@@ -16,7 +16,7 @@ let store = new Vuex.Store({ //Store S大写
             o[payload.id] = payload.data.secondLevelCategories 
             state.catagoryData = o;
 
-        },
+        },  
         updateCartList(state,payload){
            state.cartList = payload
         }

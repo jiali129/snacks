@@ -23,10 +23,19 @@ Vue.use(Router)
  import Account from '../views/details/account/account'
  import Top from '../views/details/account/top'
  import Withdraw from '../views/details/account/withdraw'
+ import Sets from '../views/details/order/sets'
  import Order from '../views/details/order/order'
+  //订单
+ import All from '../views/details/order/all'
+ import Payment from '../views/details/order/payment'
+ import Deliver from '../views/details/order/deliver'
+ import After from '../views/details/order/after'
+ import Take from '../views/details/order/take'
  
  import Server from '../views/details/server/server'
+ //地址管理
  import Site from '../views/details/site/site'
+ import Addsite from '../views/details/site/addsite'
  //引用
  import {getCookie} from '@/utils/utils'
 
@@ -100,6 +109,11 @@ Vue.use(Router)
             component:Server
         },
         {
+            path:'/addsite',
+            name:'addsite',
+            component:Addsite
+        },
+        {
             path:'/site',
             name:'site',
             component:Site
@@ -115,9 +129,41 @@ Vue.use(Router)
             component:Withdraw
         },
         {
+            path:'/sets',
+            name:'sets',
+            component:Sets
+        },
+        {
             path:'/order',
             name:'order',
-            component:Order
+            component:Order,
+            children:[
+                {
+                    path:'all',
+                    name:'all',
+                    component:All
+                },
+                {
+                    path:'payment',
+                    name:'payment',
+                    component:Payment
+                },
+                {
+                    path:'deliver',
+                    name:'deliver',
+                    component:Deliver
+                },
+                {
+                    path:'after',
+                    name:'after',
+                    component:After
+                },
+                {
+                    path:'take',
+                    name:'take',
+                    component:Take
+                }
+            ]
         }
      ]
  })

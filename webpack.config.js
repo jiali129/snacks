@@ -47,21 +47,22 @@ module.exports = {
     extensions: ['*', '.js', '.vue', '.json']
   },
   devServer: {
-    historyApiFallback: true,
+    historyApiFallback: true,//如果没有，HTML5页面会报404
     noInfo: true,
-    overlay: true
+    overlay: true,
+    host:"192.168.43.15"
   },
   performance: {
     hints: false
   },
   devtool: '#eval-source-map',
   plugins:[
-    new webpack.DefinePlugin({ //DefinePlugin区分框架版本
-      'process.env': {
-        NODE_ENV: '"development"'
-      }
-      //这里可以自己加变量，这样在别的组件不用定义也能打印到
-    })
+    // new webpack.DefinePlugin({ //DefinePlugin区分框架版本
+    //   'process.env': {
+    //     NODE_ENV: '"development"'
+    //   }
+    //   //这里可以自己加变量，这样在别的组件不用定义也能打印到
+    // })
   ]
 }
 
